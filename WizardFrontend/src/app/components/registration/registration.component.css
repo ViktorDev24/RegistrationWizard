@@ -1,0 +1,44 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Use full viewport height */
+}
+
+/* Add styles in registration.component.css */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Use full viewport height to center vertically */
+}
+
+mat-card {
+  width: 100%;
+  max-width: 400px; /* Adjust the width as per your design */
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Optional: for card shadow */
+}
+
+mat-card-title {
+  text-align: center;
+}
+
+/* Input fields styling */
+mat-form-field {
+  width: 100%; /* Make form fields take full width of the card */
+  margin-bottom: 16px; /* Space between form fields */
+}
+
+/* Button styling */
+button {
+  width: 100%;
+  margin-top: 20px; /* Add some space above the button */
+}
+.snackbar-success {
+  background-color: #4caf50; /* green */
+}
+
+.snackbar-error {
+  background-color: #f44336; /* red */
+}
