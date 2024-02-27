@@ -33,33 +33,39 @@ export class RegistrationComponent implements OnInit {
   countries: any[] = [];
   provinces: any[] = [];
   currentStep = 1;
+  showError: boolean = false;
 
   constructor(private fb: FormBuilder,
     private locationService: LocationService,
     private snackBar: MatSnackBar) {
+
+    const checkPasswords = (control: AbstractControl): ValidationErrors | null => {
+      const pass = control.get('password')?.value;
+      const confirmPass = control.get('confirmPassword')?.value;
+      this.showError = pass !== confirmPass;
+
+      return pass === confirmPass ? null : { notSame: true };
+    };
     this.step1Form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$')]],
+      password: ['', [Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z]).+$')]],
       confirmPassword: ['', Validators.required],
       agreeToTerms: [false, Validators.requiredTrue]
-    }, { validators: this.checkPasswords });
+    }, { validators: checkPasswords });
 
     this.step2Form = this.fb.group({
       country: ['', Validators.required],
-      province: [''] 
+      province: ['', Validators.required] 
     });
   }
 
   ngOnInit(): void {
+    this.showError = false;
     this.loadCountries();
-
+    
   }
 
-  checkPasswords(control: AbstractControl): ValidationErrors | null {
-    const pass = control.get('password')?.value;
-    const confirmPass = control.get('confirmPassword')?.value;
-    return pass === confirmPass ? null : { notSame: true };
-  }
+
 
   loadCountries() {
     this.locationService.getCountries().subscribe({
