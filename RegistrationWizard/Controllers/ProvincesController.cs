@@ -14,6 +14,10 @@ namespace RegistrationWizard.Controllers
         public async Task<ActionResult<IEnumerable<Province>>> GetProvinces(int countryId)
         {
             var provinces = await _provinceService.GetProvincesByCountryIdAsync(countryId);
+            if (provinces == null || !provinces.Any())
+            {
+                return NotFound();
+            }
             return Ok(provinces);
         }
     }
